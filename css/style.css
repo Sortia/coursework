@@ -1,0 +1,8 @@
+.btn-warning, .btn-warning:hover, .btn-warning:active {
+    color: white !important;
+}
+
+.selected, .selected:hover {
+    background-color: #4887F4 !important;
+}
+

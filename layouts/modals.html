@@ -1,0 +1,208 @@
+<div class="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="addEmpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmpLabel">Добавить сотрудника</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="form_emp" action="">
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">ФИО</div>
+                            </div>
+                            <input type="text" class="form-control" name="fio" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">День рождения</div>
+                            </div>
+                            <input type="text" class="form-control" name="birthday" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Адрес</div>
+                            </div>
+                            <input type="text" class="form-control" name="address" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Телефон</div>
+                            </div>
+                            <input type="text" class="form-control" name="phone" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Должность</div>
+                            </div>
+                            <input type="text" class="form-control" name="position" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Зарплата</div>
+                            </div>
+                            <input type="text" class="form-control" name="salary" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Опыт работы</div>
+                            </div>
+                            <input type="text" class="form-control" name="experience" placeholder="">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button id="save_emp" type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="goto" tabindex="-1" role="dialog" aria-labelledby="goto" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="gotoLabel">Действия</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="form_relax" action="">
+
+                    <div class="text-center">
+                        <div class="btn-group btn-group-toggle m-2 mb-4" data-toggle="buttons">
+                            <label class="btn btn-primary active">
+                                <input type="radio" name="relax_type" value="sick" autocomplete="off" checked>
+                                Больничный
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" name="relax_type" value="vacation" autocomplete="off"> Отпуск
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" name="relax_type" value="vacExp" autocomplete=""> Отпуск за свой
+                                счет
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 form-inline">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">С</div>
+                                </div>
+                                <input type="date" class="form-control" name="relax_with" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">По</div>
+                                </div>
+                                <input type="date" class="form-control" name="relax_by" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button id="add_relax" type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="getReportCard" tabindex="-1" role="dialog" aria-labelledby="getReportCard"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="getReportCardLabel">Табель рабочего времени</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="form_get_report_card" action="">
+
+                    <div class="form-inline">
+
+                        <div class="col-6">
+                            <select class="custom-select w-100" name="month">
+                                <option value="01">Январь</option>
+                                <option value="02">Февраль</option>
+                                <option value="03">Март</option>
+                                <option value="04">Апрель</option>
+                                <option value="05">Май</option>
+                                <option value="06">Июнь</option>
+                                <option value="07">Июль</option>
+                                <option value="08">Август</option>
+                                <option value="09">Сентябрь</option>
+                                <option value="10">Октябрь</option>
+                                <option value="11">Ноябрь</option>
+                                <option value="12">Декабрь</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <select name="year" class="custom-select w-100">
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button id="getReport" type="button" class="btn btn-primary">Перейти</button>
+            </div>
+        </div>
+    </div>
+</div>
