@@ -49,7 +49,7 @@ require_once "layouts/modals.html";
                         echo "<td>" . $row_data['fio'] . "</td>";
                         echo "<td>" . $row_data['position'] . "</td>";
 
-                        for ($i = 1; $i <= $count_days; $i++)
+                        for ($i = 0; $i < $count_days; $i++)
                             echo "<td class='day green {$row_data['days'][$i]}'></td>";
 
                         echo "<td>" . $row_data['work_days'] * 8 . "</td>";
