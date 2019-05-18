@@ -15,6 +15,7 @@ class EmployeesWorkInfo extends EmployeesInfo
     protected $position;
     protected $salary;
     protected $experience;
+    protected $work_start_date;
 
     public function Input()
     {
@@ -32,7 +33,7 @@ class EmployeesWorkInfo extends EmployeesInfo
         self::initDatabase();
 
         $items = self::$db->read('all');
-        $items = combine_key_values($items, 'id', 'fio', 'birthday', 'address', 'phone', 'position', 'salary', 'experience');
+        $items = combine_key_values($items, 'id', 'fio', 'birthday', 'address', 'phone', 'position', 'salary', 'experience', 'work_start_date');
 
         return $items;
     }
@@ -47,6 +48,7 @@ class EmployeesWorkInfo extends EmployeesInfo
             'position' => $this->position,
             'salary' => $this->salary,
             'experience' => $this->experience,
+            'work_start_date' => $this->work_start_date,
         ];
     }
 

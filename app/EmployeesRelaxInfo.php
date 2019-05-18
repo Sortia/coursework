@@ -7,7 +7,7 @@ require_once "EmployeesWorkInfo.php";
 require_once "Database.php";
 
 class EmployeesRelaxInfo extends EmployeesWorkInfo
-{ // todo дата трудоустройства
+{
     private $table = 'employees_relax';
 
     protected $relax_with;
@@ -22,19 +22,17 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         self::$db->create($this->getClassVars(), $this->table);
     }
 
-    public static function Output($request) // cal_days_in_month
+    public static function Output($request)
     {
         self::initDatabase();
         self::$days_in_month = cal_days_in_month(CAL_GREGORIAN, $request['month'], $request['year']);
 
         $all = self::$db->query("SELECT employees.id, employees.fio, employees.position, employees.salary, 
-            employees.experience, employees_relax.relax_with, employees_relax.relax_by, employees_relax.relax_type 
+            employees.experience, employees.work_start_date, employees_relax.relax_with, employees_relax.relax_by, employees_relax.relax_type 
             FROM employees LEFT JOIN employees_relax ON employees.id = employees_relax.employee_id;");
 
-        $all = combine_key_values($all, 'id', 'fio', 'position', 'salary', 'experience', 'relax_with', 'relax_by', 'relax_type');
+        $all = combine_key_values($all, 'id', 'fio', 'position', 'salary', 'experience', 'work_start_date', 'relax_with', 'relax_by', 'relax_type');
         $all = self::prepareResponse($all, $request);
-
-//        dd(self::$days_in_month);
 
         return [$all, self::$days_in_month];
     }
@@ -46,11 +44,14 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         foreach ($all as $row) {
             $result[$row['id']]['fio'] = $row['fio'];
             $result[$row['id']]['position'] = $row['position'];
+            $result[$row['id']]['work_start_date'] = $row['work_start_date'];
 
             for ($i = 0; $i < self::$days_in_month; $i++) {
                 $day = (mktime(0, 0, 0, $request['month'], $i, $request['year']));
 
-                if ($day >= strtotime($row['relax_with']) && $day <= strtotime($row['relax_by']))
+                if ($day < strtotime($result[$row['id']]['work_start_date']))
+                    $result[$row['id']]['days'][$i] = 'not_worked';
+                elseif ($day >= strtotime($row['relax_with']) && $day <= strtotime($row['relax_by']))
                     $result[$row['id']]['days'][$i] = $row['relax_type'];
                 elseif (!filled($result[$row['id']]['days'][$i]))
                     $result[$row['id']]['days'][$i] = '';
@@ -65,7 +66,6 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
 
         return $result;
     }
-
 
     protected function getClassVars()
     {

@@ -12,8 +12,6 @@ require_once "layouts/modals.html";
 
 ?>
 
-
-
 <div class="container-fluid mt-5">
     <div class="card shadow-lg">
         <div class="card-header">
@@ -29,6 +27,7 @@ require_once "layouts/modals.html";
                         <th scope="col">Ф.И.О.</th>
                         <th scope="col">Должность</th>
                         <?php
+                        /** @var int $count_days */
                         for ($i = 1; $i <= $count_days; $i++)
                             echo "<th scope=\"col\">$i</th>";
                         ?>
@@ -43,6 +42,7 @@ require_once "layouts/modals.html";
                     <?php
                     $num = 1;
 
+                    /** @var array $relax_data */
                     foreach ($relax_data as $row_data) {
                         echo "<tr>";
                         echo "<td>" . $num++ . "</td>";
@@ -57,19 +57,16 @@ require_once "layouts/modals.html";
                         echo "<td>" . $row_data['sick_days'] * 8 . "</td>";
                         echo "<td>" . $row_data['vacExp_days'] * 8 . "</td>";
                         echo "<td>" . $row_data['month_salary'] . "</td>";
-
                         echo "</tr>";
                     }
-
 
                     ?>
                     </tbody>
                 </table>
-
-
             </div>
 
             <div class="descriptions text-right mt-3 mr-3">
+                <div class="btn not_worked border">Не работал</div>
                 <div class="btn green">Рабочие</div>
                 <div class="btn holiday">Выходные</div>
                 <div class="btn vacation">Отпуск</div>
@@ -120,5 +117,8 @@ require_once "layouts/modals.html";
             background-color: gray;
         }
 
+        .not_worked {
+            background-color: white;
+        }
 
     </style>

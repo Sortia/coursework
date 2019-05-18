@@ -33,7 +33,7 @@ class Database
 
         $query = "INSERT INTO " . $table . " (" . $keys_query . ") VALUES ('" . $values_query . "')";
 
-        mysqli_query($this->link, $query);
+        return mysqli_query($this->link, $query);
     }
 
     public function read($what)
@@ -58,12 +58,14 @@ class Database
     public function delete($id)
     {
         $query = "DELETE FROM employees WHERE id = $id";
-        mysqli_query($this->link, $query);
+        return mysqli_query($this->link, $query);
     }
 
     public function query($query)
     {
-        return mysqli_fetch_all(mysqli_query($this->link, $query));
+        $result = mysqli_query($this->link, $query);
+
+        return $result ? mysqli_fetch_all($result) : [];
     }
 
     private function fetch($database_result)
