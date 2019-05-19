@@ -18,12 +18,12 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
 
     protected static $days_in_month;
 
-    public function input()
+    public function input() // создание новой записи
     {
         self::$db->create($this->getClassVars(), self::$table);
     }
 
-    public static function output($request)
+    public static function output($request) // получение данных
     {
         $report_month = $request['month'];
         $report_year = $request['year'];
@@ -41,7 +41,7 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         return [$relax_employees, self::$days_in_month];
     }
 
-    private static function prepareResponse($relax_employees, $report_month, $report_year)
+    private static function prepareResponse($relax_employees, $report_month, $report_year) // подготовка данных для ответа
     {
         $result = [];
 
@@ -73,7 +73,7 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         return $result;
     }
 
-    protected function getClassVars()
+    protected function getClassVars() // получение переменных класса
     {
         return [
             'relax_with' => $this->relax_with,
@@ -83,7 +83,7 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         ];
     }
 
-    protected static function calcPay($result, $all) # расчет зарплаты за месяц
+    protected static function calcPay($result, $all) // расчет зарплаты за месяц
     {
         foreach ($all as $person) {
             if ($person['experience'] < 3)
@@ -107,7 +107,7 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         return $result;
     }
 
-    protected static function countingDays($result)
+    protected static function countingDays($result) // подсчет количества дней
     {
         foreach ($result as &$employee) {
 

@@ -6,7 +6,6 @@
  * Time: 16:42
  */
 
-
 namespace coursework\app;
 
 abstract class EmployeesInfo
@@ -24,7 +23,7 @@ abstract class EmployeesInfo
 
     protected static $db;
 
-    public static function initDatabase()
+    public static function initDatabase() // инициализация соединения с БД
     {
         self::$db = new Database("127.0.0.1", "root", "", "coursework");
     }

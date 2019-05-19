@@ -15,15 +15,15 @@ class Database
 
     public function __construct($host, $user, $password, $database)
     {
-        $this->link = mysqli_connect($host, $user, $password, $database);
+        $this->link = mysqli_connect($host, $user, $password, $database); // открытие соединения с БД
     }
 
     public function __destruct()
     {
-        mysqli_close($this->link);
+        mysqli_close($this->link); // закрытие соединения с БД
     }
 
-    public function create($data, $table)
+    public function create($data, $table) // добавление данных ($data) в переданную таблицу (аргумент $table)
     {
         $keys = array_keys($data);
         $values = array_values($data);
@@ -36,7 +36,7 @@ class Database
         return mysqli_query($this->link, $query);
     }
 
-    public function read($what, $table)
+    public function read($what, $table) // получение данных из таблицы $table
     {
         switch ($what) {
             default:
@@ -55,7 +55,7 @@ class Database
 
     }
 
-    public function delete($id)
+    public function delete($id) // удаление данных
     {
         $result = [];
 
@@ -65,14 +65,14 @@ class Database
         return $result;
     }
 
-    public function query($query)
+    public function query($query) // выполнение пользовательского запроса к БД
     {
         $result = mysqli_query($this->link, $query);
 
         return $result ? mysqli_fetch_all($result) : [];
     }
 
-    private function fetch($database_result)
+    private function fetch($database_result) // получение данных в читабельном виде
     {
         return !is_null($database_result) ? mysqli_fetch_all($database_result) : null;
     }

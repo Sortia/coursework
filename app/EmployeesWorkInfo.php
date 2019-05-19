@@ -18,18 +18,18 @@ class EmployeesWorkInfo extends EmployeesInfo
     protected $experience;
     protected $work_start_date;
 
-    public function input()
+    public function input() // добавление сотрудника
     {
         self::$db->create($this->getClassVars(), self::$table);
     }
 
-    public static function deleteEmp($id)
+    public static function deleteEmp($id) // удаление сотрудника
     {
         self::initDatabase();
         self::$db->delete($id);
     }
 
-    public static function output($request)
+    public static function output($request) // получение данных
     {
         self::initDatabase();
 
@@ -39,7 +39,7 @@ class EmployeesWorkInfo extends EmployeesInfo
         return $items;
     }
 
-    protected function getClassVars()
+    protected function getClassVars() // получение переменных класса
     {
         return [
             'fio' => $this->fio,
