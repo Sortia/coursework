@@ -8,7 +8,7 @@ require_once "Database.php";
 
 class EmployeesRelaxInfo extends EmployeesWorkInfo
 {
-    private $table = 'employees_relax';
+    private $table = 'relax';
 
     protected $relax_with;
     protected $relax_by;
@@ -104,7 +104,7 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
     {
         foreach ($result as &$employee) {
 
-            $employee['sick_days'] = $employee['vacation_days'] = $employee['vacExp_days'] = $employee['holidays'] = 0;
+            $employee['sick_days'] = $employee['not_worked'] = $employee['vacation_days'] = $employee['vacExp_days'] = $employee['holidays'] = 0;
 
             foreach ($employee['days'] as $day) {
                 switch ($day) {
@@ -120,6 +120,8 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
                     case 'holiday':
                         $employee['holidays']++;
                         break;
+                    case 'not_worked':
+                        $employee['not_worked']++;
                 }
             }
 
@@ -128,7 +130,8 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
                 - $employee['sick_days']
                 - $employee['vacation_days']
                 - $employee['vacExp_days']
-                - $employee['holidays'];
+                - $employee['holidays']
+                - $employee['not_worked'];
         }
 
         return $result;
