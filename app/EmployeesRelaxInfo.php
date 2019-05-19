@@ -18,12 +18,12 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
 
     protected static $days_in_month;
 
-    public function Input()
+    public function input()
     {
         self::$db->create($this->getClassVars(), self::$table);
     }
 
-    public static function Output($request)
+    public static function output($request)
     {
         $report_month = $request['month'];
         $report_year = $request['year'];

@@ -11,9 +11,9 @@ namespace coursework\app;
 
 abstract class EmployeesInfo
 {
-    public abstract function Input();
+    public abstract function input();
 
-    public static abstract function Output($request);
+    public static abstract function output($request);
 
     protected abstract function getClassVars();
 

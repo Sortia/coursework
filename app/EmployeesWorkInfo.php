@@ -18,7 +18,7 @@ class EmployeesWorkInfo extends EmployeesInfo
     protected $experience;
     protected $work_start_date;
 
-    public function Input()
+    public function input()
     {
         self::$db->create($this->getClassVars(), self::$table);
     }
@@ -29,7 +29,7 @@ class EmployeesWorkInfo extends EmployeesInfo
         self::$db->delete($id);
     }
 
-    public static function Output($request)
+    public static function output($request)
     {
         self::initDatabase();
 

@@ -14,11 +14,11 @@ require_once "app/EmployeesWorkInfo.php";
 require_once "helpers.php";
 
 if (empty($_REQUEST) && $_SERVER['REQUEST_URI'] === '/') {
-    $employees_data = EmployeesWorkInfo::Output($_REQUEST);
+    $employees_data = EmployeesWorkInfo::output($_REQUEST);
 }
 
 if ($_SERVER['PHP_SELF'] === '/reportCard.php') {
-    list($relax_data, $count_days) = EmployeesRelaxInfo::Output($_REQUEST);
+    list($relax_data, $count_days) = EmployeesRelaxInfo::output($_REQUEST);
 }
 
 if (isset($_REQUEST['del_id'])) {
@@ -27,10 +27,10 @@ if (isset($_REQUEST['del_id'])) {
 
 if (isset($_REQUEST['fio'])) { // сохранение
     $employee = new EmployeesWorkInfo($_REQUEST);
-    $employee->Input();
+    $employee->input();
 }
 
 if (isset($_REQUEST['relax_with']) && isset($_REQUEST['relax_by'])) { // сохранение
     $employee = new EmployeesRelaxInfo($_REQUEST);
-    $employee->Input(1);
+    $employee->input(1);
 }
