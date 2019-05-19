@@ -8,7 +8,8 @@ require_once "Database.php";
 
 class EmployeesRelaxInfo extends EmployeesWorkInfo
 {
-    private $table = 'relax';
+    static private $table = 'relax';
+    static private $fields = ['id', 'fio', 'position', 'salary', 'experience', 'work_start_date', 'relax_with', 'relax_by', 'relax_type'];
 
     protected $relax_with;
     protected $relax_by;
@@ -19,50 +20,55 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
 
     public function Input()
     {
-        self::$db->create($this->getClassVars(), $this->table);
+        self::$db->create($this->getClassVars(), self::$table);
     }
 
     public static function Output($request)
     {
+        $report_month = $request['month'];
+        $report_year = $request['year'];
+
         self::initDatabase();
-        self::$days_in_month = cal_days_in_month(CAL_GREGORIAN, $request['month'], $request['year']);
+        self::$days_in_month = cal_days_in_month(CAL_GREGORIAN, $report_month, $report_year);
 
-        $all = self::$db->query("SELECT employees.id, employees.fio, employees.position, employees.salary, 
-            employees.experience, employees.work_start_date, employees_relax.relax_with, employees_relax.relax_by, employees_relax.relax_type 
-            FROM employees LEFT JOIN employees_relax ON employees.id = employees_relax.employee_id;");
+        $relax_employees = self::$db->query("SELECT employees.id, employees.fio, employees.position, employees.salary, 
+            employees.experience, employees.work_start_date, relax.relax_with, relax.relax_by, relax.relax_type 
+            FROM employees LEFT JOIN relax ON employees.id = relax.employee_id ");
 
-        $all = combine_key_values($all, 'id', 'fio', 'position', 'salary', 'experience', 'work_start_date', 'relax_with', 'relax_by', 'relax_type');
-        $all = self::prepareResponse($all, $request);
+        $relax_employees = combine_key_values($relax_employees, self::$fields);
+        $relax_employees = self::prepareResponse($relax_employees, $report_month, $report_year);
 
-        return [$all, self::$days_in_month];
+        return [$relax_employees, self::$days_in_month];
     }
 
-    private static function prepareResponse($all, $request)
+    private static function prepareResponse($relax_employees, $report_month, $report_year)
     {
         $result = [];
 
-        foreach ($all as $row) {
-            $result[$row['id']]['fio'] = $row['fio'];
-            $result[$row['id']]['position'] = $row['position'];
-            $result[$row['id']]['work_start_date'] = $row['work_start_date'];
+        foreach ($relax_employees as $row) {
+            $id = $row['id'];
+            $result[$id]['fio'] = $row['fio'];
+            $result[$id]['position'] = $row['position'];
+            $result[$id]['work_start_date'] = $row['work_start_date'];
 
             for ($i = 0; $i < self::$days_in_month; $i++) {
-                $day = (mktime(0, 0, 0, $request['month'], $i, $request['year']));
-
-                if ($day < strtotime($result[$row['id']]['work_start_date']))
-                    $result[$row['id']]['days'][$i] = 'not_worked';
-                elseif ($day >= strtotime($row['relax_with']) && $day <= strtotime($row['relax_by']))
-                    $result[$row['id']]['days'][$i] = $row['relax_type'];
-                elseif (!filled($result[$row['id']]['days'][$i]))
-                    $result[$row['id']]['days'][$i] = '';
+                $day = (mktime(0, 0, 0, $report_month, $i, $report_year));
 
                 if (in_array(date('N', $day), [6, 7]))
-                    $result[$row['id']]['days'][$i] = 'holiday';
+                    $result[$id]['days'][$i] = 'holiday';
+                elseif ($day < strtotime($result[$id]['work_start_date']))
+                    $result[$id]['days'][$i] = 'not_worked';
+                elseif ($day >= strtotime($row['relax_with']) && $day <= strtotime($row['relax_by']))
+                    $result[$id]['days'][$i] = $row['relax_type'];
+                elseif (!filled($result[$row['id']]['days'][$i]))
+                    $result[$id]['days'][$i] = '';
+
+
             }
         }
 
         $result = self::countingDays($result);
-        $result = self::countingPay($result, $all);
+        $result = self::calcPay($result, $relax_employees);
 
         return $result;
     }
@@ -77,7 +83,7 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
         ];
     }
 
-    protected static function countingPay($result, $all)
+    protected static function calcPay($result, $all) # расчет зарплаты за месяц
     {
         foreach ($all as $person) {
             if ($person['experience'] < 3)
@@ -92,7 +98,8 @@ class EmployeesRelaxInfo extends EmployeesWorkInfo
                 = ($person['salary']
                     * ($result[$person['id']]['work_days'] + $result[$person['id']]['vacation_days'])
                     / (self::$days_in_month - $result[$person['id']]['holidays']))
-                + (($person['salary'] * $sick_koef) / (self::$days_in_month - $result[$person['id']]['holidays']) * $result[$person['id']]['sick_days']);
+                + (($person['salary'] * $sick_koef)
+                    / (self::$days_in_month - $result[$person['id']]['holidays']) * $result[$person['id']]['sick_days']);
 
             $result[$person['id']]['month_salary'] = round($result[$person['id']]['month_salary'], 2);
         }

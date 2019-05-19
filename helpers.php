@@ -37,7 +37,7 @@ function filled(...$values)
             return false; return true;
 }
 
-function combine_key_values(array $db_result, ...$keys)
+function combine_key_values(array $db_result, $keys)
 {
     foreach ($db_result as &$record)
         $record = array_combine($keys, $record);

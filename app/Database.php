@@ -31,16 +31,16 @@ class Database
         $keys_query = implode(', ', $keys);
         $values_query = implode('\', \'', $values);
 
-        $query = "INSERT INTO " . $table . " (" . $keys_query . ") VALUES ('" . $values_query . "')";
+        $query = "INSERT INTO $table ( $keys_query ) VALUES ('" . $values_query . "')";
 
         return mysqli_query($this->link, $query);
     }
 
-    public function read($what)
+    public function read($what, $table)
     {
         switch ($what) {
             default:
-                $query = "SELECT * FROM employees";
+                $query = "SELECT * FROM $table";
                 $data = mysqli_query($this->link, $query);
                 break;
         }
@@ -57,8 +57,12 @@ class Database
 
     public function delete($id)
     {
-        $query = "DELETE FROM employees WHERE id = $id";
-        return mysqli_query($this->link, $query);
+        $result = [];
+
+        $result[] = mysqli_query($this->link, "DELETE FROM employees WHERE id = $id");
+        $result[] = mysqli_query($this->link, "DELETE FROM relax WHERE employee_id = $id");
+
+        return $result;
     }
 
     public function query($query)

@@ -6,3 +6,37 @@
     background-color: #4887F4 !important;
 }
 
+.report_table td {
+    border: 2px solid #DEE2E6;
+    height: 15px;
+}
+
+.day {
+    width: 43px;
+    height: 43px;
+    padding-left: 17px !important;
+}
+
+.green {
+    background-color: #28a745;
+}
+
+.sick {
+    background-color: yellow;
+}
+
+.vacation {
+    background-color: #007bff;
+}
+
+.vacExp {
+    background-color: deeppink;
+}
+
+.holiday {
+    background-color: gray;
+}
+
+.not_worked {
+    background-color: white;
+}

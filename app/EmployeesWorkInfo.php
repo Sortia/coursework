@@ -10,7 +10,8 @@ namespace coursework\app;
 
 class EmployeesWorkInfo extends EmployeesInfo
 {
-    private $table = 'employees';
+    static private $table = 'employees';
+    static private $fields = ['id', 'fio', 'birthday', 'address', 'phone', 'position', 'salary', 'experience', 'work_start_date'];
 
     protected $position;
     protected $salary;
@@ -19,7 +20,7 @@ class EmployeesWorkInfo extends EmployeesInfo
 
     public function Input()
     {
-        self::$db->create($this->getClassVars(), $this->table);
+        self::$db->create($this->getClassVars(), self::$table);
     }
 
     public static function deleteEmp($id)
@@ -32,8 +33,8 @@ class EmployeesWorkInfo extends EmployeesInfo
     {
         self::initDatabase();
 
-        $items = self::$db->read('all');
-        $items = combine_key_values($items, 'id', 'fio', 'birthday', 'address', 'phone', 'position', 'salary', 'experience', 'work_start_date');
+        $items = self::$db->read('all', self::$table);
+        $items = combine_key_values($items, self::$fields);
 
         return $items;
     }

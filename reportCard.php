@@ -19,8 +19,8 @@ require_once "layouts/modals.html";
         </div>
         <div class="card-body">
 
-            <div class="my_table" style="overflow-x: scroll">
-                <table class="table" style="width: 2300px">
+            <div style="overflow-x: scroll">
+                <table class="table report_table" style="width: 2300px">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -82,43 +82,3 @@ require_once "layouts/modals.html";
 
         </div>
     </div>
-
-
-    <style>
-
-        td {
-            border: 2px solid #DEE2E6;
-            height: 15px;
-        }
-
-        .day {
-            width: 43px;
-            height: 43px;
-            padding-left: 17px !important;
-        }
-
-        .green {
-            background-color: #28a745;
-        }
-
-        .sick {
-            background-color: yellow;
-        }
-
-        .vacation {
-            background-color: #007bff;
-        }
-
-        .vacExp {
-            background-color: deeppink;
-        }
-
-        .holiday {
-            background-color: gray;
-        }
-
-        .not_worked {
-            background-color: white;
-        }
-
-    </style>
