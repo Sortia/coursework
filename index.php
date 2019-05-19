@@ -7,7 +7,7 @@
  */
 
     require_once "main_script.php";
-    require_once "layouts/app.php";
+    require_once "layouts/app.html";
     require_once "layouts/modals.html";
 
 ?>
